@@ -78,6 +78,7 @@ let students = [
 var available_students = JSON.parse(JSON.stringify(students));
 
 let group_number = 1;
+let max_group_number = 1;
 
 students.forEach ((student) => {
     if (student.group == null && available_students.length >= 3) {
@@ -100,8 +101,10 @@ students.forEach ((student) => {
             available_students.splice(teammate_2_available_index, 1);
             // increment the group number
             group_number++;
+            max_group_number++;
         }
     } else if (student.group == null && available_students.length > 0) {
+        group_number = Math.floor(Math.random() * max_group_number);
         student.group = group_number;
     }
 });
