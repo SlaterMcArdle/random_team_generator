@@ -1,3 +1,4 @@
+// list of students in the class
 let students = [
     {
         name: "Niccolo Eck",
@@ -74,17 +75,22 @@ let students = [
     },
 ];
 
-
+// Create a decoupled copy of students to manipulate in the foreach loop
 var available_students = JSON.parse(JSON.stringify(students));
 
+// global incrementing veriables
 let group_number = 1;
 let max_group_number = 1;
 
+// loop through all of the students and assign them into groups of 3
 students.forEach ((student) => {
+    // ensure the student hasn't been assigned a group yet, and there's at least 3 students still unassigned
     if (student.group == null && available_students.length >= 3) {
         // add the group number to the student and reove them from the available students list
         let student_index = students.findIndex(element => element.name == student.name);
+        // ensure the student can be found in the students list
         if (student_index != -1) {
+            // Assign the student to a group and remove them from the unassigned students
             students[student_index].group = group_number;
             available_students.shift();
             // Do the same for the randomly selected first team mate
@@ -103,7 +109,9 @@ students.forEach ((student) => {
             group_number++;
             max_group_number++;
         }
-    } else if (student.group == null && available_students.length > 0) {
+    }
+    // assign the remaining students to existing teams if there's not an even set of threes
+    else if (student.group == null && available_students.length > 0) {
         available_students.shift();
         group_number = Math.floor(Math.random() * max_group_number - 1) + 1;
         student.group = group_number;
