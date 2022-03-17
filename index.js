@@ -82,10 +82,20 @@ let available_students = JSON.parse(JSON.stringify(students));
 let group_number = 1;
 let max_group_number = 1;
 
+const group_size = 3;
+
+const assignTeammate = (group_number) => {
+    const teammate_available_index = Math.floor(Math.random() * (available_students.length - 1));
+    const teammate = available_students[teammate_available_index];
+    const teammate_index = students.findIndex(element => element.name == teammate.name);
+    students[teammate_index].group = group_number;
+    available_students.splice(teammate_available_index, 1);
+};
+
 // loop through all of the students and assign them into groups of 3
 students.forEach ((student) => {
     // ensure the student hasn't been assigned a group yet, and there's at least 3 students still unassigned
-    if (student.group == null && available_students.length >= 3) {
+    if (student.group == null && available_students.length >= group_size) {
         // add the group number to the student and reove them from the available students list
         let student_index = students.findIndex(element => element.name == student.name);
         // ensure the student can be found in the students list
@@ -93,18 +103,21 @@ students.forEach ((student) => {
             // Assign the student to a group and remove them from the unassigned students
             students[student_index].group = group_number;
             available_students.shift();
-            // Do the same for the randomly selected first team mate
-            let teammate_1_available_index = Math.floor(Math.random() * (available_students.length - 1));
-            let teammate_1 = available_students[teammate_1_available_index];
-            let teammate_1_index = students.findIndex(element => element.name == teammate_1.name);
-            students[teammate_1_index].group = group_number;
-            available_students.splice(teammate_1_available_index, 1);
+            // assign as many teammates as needed to reach the group size
+            for (let i = 1; i < group_size; i++) {
+                assignTeammate(group_number);
+            }
+            // let teammate_1_available_index = Math.floor(Math.random() * (available_students.length - 1));
+            // let teammate_1 = available_students[teammate_1_available_index];
+            // let teammate_1_index = students.findIndex(element => element.name == teammate_1.name);
+            // students[teammate_1_index].group = group_number;
+            // available_students.splice(teammate_1_available_index, 1);
             // The same again for the second team mate
-            let teammate_2_available_index = Math.floor(Math.random() * (available_students.length - 1));
-            let teammate_2 = available_students[teammate_2_available_index];
-            let teammate_2_index = students.findIndex(element => element.name == teammate_2.name);
-            students[teammate_2_index].group = group_number;
-            available_students.splice(teammate_2_available_index, 1);
+            // let teammate_2_available_index = Math.floor(Math.random() * (available_students.length - 1));
+            // let teammate_2 = available_students[teammate_2_available_index];
+            // let teammate_2_index = students.findIndex(element => element.name == teammate_2.name);
+            // students[teammate_2_index].group = group_number;
+            // available_students.splice(teammate_2_available_index, 1);
             // increment the group number and max group number
             group_number++;
             max_group_number++;
@@ -142,4 +155,3 @@ let groupBy = (data, key) => { // `data` is an array of objects, `key` is the ke
 const grouped_students = groupBy(students, "group");
 //   print te result
 console.log(grouped_students);
-
