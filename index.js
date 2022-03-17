@@ -76,7 +76,7 @@ let students = [
 ];
 
 // Create a decoupled copy of students to manipulate in the foreach loop
-var available_students = JSON.parse(JSON.stringify(students));
+let available_students = JSON.parse(JSON.stringify(students));
 
 // global incrementing veriables
 let group_number = 1;
@@ -119,12 +119,12 @@ students.forEach ((student) => {
 });
 
 // CREDIT TO: robmathers https://gist.github.com/robmathers/1830ce09695f759bf2c4df15c29dd22d
-var groupBy = function(data, key) { // `data` is an array of objects, `key` is the key (or property accessor) to group by
+let groupBy = (data, key) => { // `data` is an array of objects, `key` is the key (or property accessor) to group by
     // reduce runs this anonymous function on each element of `data` (the `item` parameter,
     // returning the `storage` parameter at the end
-    return data.reduce(function(storage, item) {
+    return data.reduce((storage, item) => {
       // get the first instance of the key by which we're grouping
-      var group = item[key];
+      let group = item[key];
       
       // set `storage` for this instance of group to the outer scope (if not empty) or initialize it
       storage[group] = storage[group] || [];
