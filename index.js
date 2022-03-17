@@ -1,3 +1,4 @@
+//#region GLOBAL VARIABLES
 // list of students in the class
 let students = [
     {
@@ -74,16 +75,16 @@ let students = [
         group: null
     },
 ];
-
 // Create a decoupled copy of students to manipulate in the foreach loop
 let available_students = JSON.parse(JSON.stringify(students));
-
 // global incrementing veriables
 let group_number = 1;
 let max_group_number = 1;
-
+// Set the desired group size
 const group_size = 3;
+//#endregion
 
+// assign a random teammate to the selected group
 const assignTeammate = (group_number) => {
     const teammate_available_index = Math.floor(Math.random() * (available_students.length - 1));
     const teammate = available_students[teammate_available_index];
