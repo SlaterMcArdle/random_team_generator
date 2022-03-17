@@ -86,7 +86,7 @@ students.forEach ((student) => {
         let student_index = students.findIndex(element => element.name == student.name);
         if (student_index != -1) {
             students[student_index].group = group_number;
-            available_students.splice(student_index, 1);
+            available_students.shift();
             // Do the same for the randomly selected first team mate
             let teammate_1_available_index = Math.floor(Math.random() * (available_students.length - 1));
             let teammate_1 = available_students[teammate_1_available_index];
@@ -104,11 +104,13 @@ students.forEach ((student) => {
             max_group_number++;
         }
     } else if (student.group == null && available_students.length > 0) {
-        group_number = Math.floor(Math.random() * max_group_number);
+        available_students.shift();
+        group_number = Math.floor(Math.random() * max_group_number - 1) + 1;
         student.group = group_number;
     }
 });
 
+// CREDIT TO: robmathers https://gist.github.com/robmathers/1830ce09695f759bf2c4df15c29dd22d
 var groupBy = function(data, key) { // `data` is an array of objects, `key` is the key (or property accessor) to group by
     // reduce runs this anonymous function on each element of `data` (the `item` parameter,
     // returning the `storage` parameter at the end
@@ -125,7 +127,10 @@ var groupBy = function(data, key) { // `data` is an array of objects, `key` is t
       // return the updated storage to the reduce function, which will then loop through the next 
       return storage; 
     }, {}); // {} is the initial value of the storage
-  };
-  const grouped_students = groupBy(students, "group");
-  console.log(grouped_students);
+};
+
+//   group the students together by group number
+const grouped_students = groupBy(students, "group");
+//   print te result
+console.log(grouped_students);
 
