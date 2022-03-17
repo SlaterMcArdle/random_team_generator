@@ -98,36 +98,23 @@ students.forEach ((student) => {
     if (student.group == null && available_students.length >= group_size) {
         // add the group number to the student and reove them from the available students list
         let student_index = students.findIndex(element => element.name == student.name);
-        // ensure the student can be found in the students list
-        if (student_index != -1) {
-            // Assign the student to a group and remove them from the unassigned students
-            students[student_index].group = group_number;
-            available_students.shift();
-            // assign as many teammates as needed to reach the group size
-            for (let i = 1; i < group_size; i++) {
-                assignTeammate(group_number);
-            }
-            // let teammate_1_available_index = Math.floor(Math.random() * (available_students.length - 1));
-            // let teammate_1 = available_students[teammate_1_available_index];
-            // let teammate_1_index = students.findIndex(element => element.name == teammate_1.name);
-            // students[teammate_1_index].group = group_number;
-            // available_students.splice(teammate_1_available_index, 1);
-            // The same again for the second team mate
-            // let teammate_2_available_index = Math.floor(Math.random() * (available_students.length - 1));
-            // let teammate_2 = available_students[teammate_2_available_index];
-            // let teammate_2_index = students.findIndex(element => element.name == teammate_2.name);
-            // students[teammate_2_index].group = group_number;
-            // available_students.splice(teammate_2_available_index, 1);
-            // increment the group number and max group number
-            group_number++;
-            max_group_number++;
+        // jump over this student if they can't be found
+        if (student_index == -1) {return;}
+        // Assign the student to a group and remove them from the unassigned students
+        students[student_index].group = group_number;
+        available_students.shift();
+        // assign as many teammates as needed to reach the group size
+        for (let i = 1; i < group_size; i++) {
+            assignTeammate(group_number);
         }
+        group_number++;
+        max_group_number++;
     }
     // assign the remaining students to existing teams if there's not an even set of threes
     else if (student.group == null && available_students.length > 0) {
         available_students.shift();
         // get a random group number and ensure it can't be zero.
-        group_number = Math.floor(Math.random() * max_group_number - 1) + 1;
+        group_number = Math.floor(Math.random() * (max_group_number - 1)) + 1;
         student.group = group_number;
     }
 });
