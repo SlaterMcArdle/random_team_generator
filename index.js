@@ -105,7 +105,7 @@ students.forEach ((student) => {
             let teammate_2_index = students.findIndex(element => element.name == teammate_2.name);
             students[teammate_2_index].group = group_number;
             available_students.splice(teammate_2_available_index, 1);
-            // increment the group number
+            // increment the group number and max group number
             group_number++;
             max_group_number++;
         }
@@ -113,6 +113,7 @@ students.forEach ((student) => {
     // assign the remaining students to existing teams if there's not an even set of threes
     else if (student.group == null && available_students.length > 0) {
         available_students.shift();
+        // get a random group number and ensure it can't be zero.
         group_number = Math.floor(Math.random() * max_group_number - 1) + 1;
         student.group = group_number;
     }
