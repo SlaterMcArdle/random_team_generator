@@ -18,7 +18,7 @@
   Run with npm start.
 
   ## Contribution Instructions
-  undefined
+  It could use the ability to store the class list separately, and update the classlist from within the generator. It could also use a more graphical interface.
 
   ## Testing Instructions
   There's no input, so not much to test.
